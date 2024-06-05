@@ -9,4 +9,8 @@ import com.anyan.entity.User;
 public interface UserService {
 
     String getUserName(User user);
+
+    default int getNumber() {
+        return 1;
+    }
 }

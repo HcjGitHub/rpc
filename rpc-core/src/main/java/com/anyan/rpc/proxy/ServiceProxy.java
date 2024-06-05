@@ -37,7 +37,7 @@ public class ServiceProxy implements InvocationHandler {
             // 序列化请求参数
             byte[] request = serializer.serialize(rpcRequest);
             // 远程调用
-            HttpResponse httpResponse = HttpRequest.post("http://localhost:8080/")
+            HttpResponse httpResponse = HttpRequest.post("http://localhost:8081/")
                     .body(request)
                     .execute();
 
