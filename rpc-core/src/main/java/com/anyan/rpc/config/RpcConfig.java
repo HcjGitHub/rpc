@@ -1,5 +1,6 @@
 package com.anyan.rpc.config;
 
+import com.anyan.rpc.serializer.SerializerKeys;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -37,4 +38,9 @@ public class RpcConfig implements Serializable {
      * 模拟调用
      */
     private boolean mock = false;
+
+    /**
+     * 序列化方式
+     */
+    private String serializer = SerializerKeys.JDK;
 }

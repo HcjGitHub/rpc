@@ -1,9 +1,12 @@
 package com.anyan.rpc.handler;
 
+import com.anyan.rpc.RpcApplication;
 import com.anyan.rpc.model.RpcRequest;
 import com.anyan.rpc.model.RpcResponse;
 import com.anyan.rpc.register.LocalRegister;
 import com.anyan.rpc.serializer.JDKSerializer;
+import com.anyan.rpc.serializer.Serializer;
+import com.anyan.rpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -21,7 +24,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        JDKSerializer serializer = new JDKSerializer();
+        Serializer serializer = SerializerFactory.getSerializer(RpcApplication.getRpcConfig().getSerializer());
 
         // 记录日志
         System.out.println("received request: " + request.uri() + request.method());
@@ -65,7 +68,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
 
     }
 
-    private void doResponse(HttpServerRequest request, RpcResponse rpcResponse, JDKSerializer serializer) {
+    private void doResponse(HttpServerRequest request, RpcResponse rpcResponse, Serializer serializer) {
         HttpServerResponse response = request.response().putHeader("Content-Type", "application/octet-stream");
         try {
             byte[] bytes = serializer.serialize(rpcResponse);

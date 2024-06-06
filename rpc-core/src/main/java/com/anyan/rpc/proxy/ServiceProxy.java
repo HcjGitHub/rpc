@@ -3,9 +3,12 @@ package com.anyan.rpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.anyan.rpc.RpcApplication;
 import com.anyan.rpc.model.RpcRequest;
 import com.anyan.rpc.model.RpcResponse;
 import com.anyan.rpc.serializer.JDKSerializer;
+import com.anyan.rpc.serializer.Serializer;
+import com.anyan.rpc.serializer.SerializerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
@@ -23,7 +26,7 @@ public class ServiceProxy implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) {
 
         // 序列化器
-        JDKSerializer serializer = new JDKSerializer();
+        Serializer serializer = SerializerFactory.getSerializer(RpcApplication.getRpcConfig().getSerializer());
 
         // 构造请求参数
         RpcRequest rpcRequest = RpcRequest.builder()
