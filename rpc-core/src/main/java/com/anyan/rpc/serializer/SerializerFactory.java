@@ -1,6 +1,6 @@
 package com.anyan.rpc.serializer;
 
-import spi.SpiLoader;
+import com.anyan.rpc.spi.SpiLoader;
 
 /**
  * 序列化工厂类 用于获取序列化器 SPI 实现类
@@ -16,12 +16,17 @@ public class SerializerFactory {
     }
 
     /**
+     * 默认序列化器 jdk 序列化器
+     */
+    public static final Serializer DEFAULT_SERIALIZER = new JDKSerializer();
+
+    /**
      * 获取序列化器 SPI 实现类
      *
      * @param key 序列化器 SPI 实现类的 key
      * @return
      */
-    public static Serializer getSerializer(String key) {
+    public static Serializer getInstance(String key) {
         return SpiLoader.getInstance(Serializer.class, key);
     }
 }

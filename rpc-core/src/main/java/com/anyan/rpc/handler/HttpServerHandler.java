@@ -3,8 +3,7 @@ package com.anyan.rpc.handler;
 import com.anyan.rpc.RpcApplication;
 import com.anyan.rpc.model.RpcRequest;
 import com.anyan.rpc.model.RpcResponse;
-import com.anyan.rpc.register.LocalRegister;
-import com.anyan.rpc.serializer.JDKSerializer;
+import com.anyan.rpc.registry.LocalRegistry;
 import com.anyan.rpc.serializer.Serializer;
 import com.anyan.rpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
@@ -24,7 +23,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        Serializer serializer = SerializerFactory.getSerializer(RpcApplication.getRpcConfig().getSerializer());
+        Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         // 记录日志
         System.out.println("received request: " + request.uri() + request.method());
@@ -49,7 +48,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
             }
             // 请求参数不为空，通过反射调用服务端方法
             try {
-                Class<?> serviceClass = LocalRegister.getService(rpcRequest.getServiceName());
+                Class<?> serviceClass = LocalRegistry.getService(rpcRequest.getServiceName());
                 Method method = serviceClass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
                 Object result = method.invoke(serviceClass.newInstance(), rpcRequest.getArgs());
                 // 设置响应结果

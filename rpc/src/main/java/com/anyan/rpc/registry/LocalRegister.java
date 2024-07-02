@@ -1,4 +1,4 @@
-package com.anyan.rpc.register;
+package com.anyan.rpc.registry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

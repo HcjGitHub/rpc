@@ -1,4 +1,4 @@
-package spi;
+package com.anyan.rpc.spi;
 
 import cn.hutool.core.io.resource.ResourceUtil;
 import com.anyan.rpc.serializer.Serializer;
@@ -118,7 +118,7 @@ public class SpiLoader {
                     while ((line = br.readLine()) != null) {
                         String[] split = line.split("=");
                         if (split.length != 2) {
-                            throw new RuntimeException("SPI配置文件格式错误："+line);
+                            throw new RuntimeException("SPI配置文件格式错误：" + line);
                         }
                         String key = split[0].trim();
                         String className = split[1].trim();

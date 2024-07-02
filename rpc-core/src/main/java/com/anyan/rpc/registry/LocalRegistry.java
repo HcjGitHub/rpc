@@ -1,4 +1,4 @@
-package com.anyan.rpc.register;
+package com.anyan.rpc.registry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * DateTime: 2024/6/1
  */
 
-public class LocalRegister {
+public class LocalRegistry {
 
     public static final Map<String, Class<?>> serviceMap = new ConcurrentHashMap<>();
 
@@ -36,7 +36,6 @@ public class LocalRegister {
 
     /**
      * 注销服务
-     *
      */
     public static void remove(String serviceName) {
         serviceMap.remove(serviceName);

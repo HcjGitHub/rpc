@@ -1,7 +1,10 @@
 package com.anyan.rpc;
 
+import com.anyan.rpc.config.RegistryConfig;
 import com.anyan.rpc.config.RpcConfig;
 import com.anyan.rpc.constant.RpcConstant;
+import com.anyan.rpc.registry.Registry;
+import com.anyan.rpc.registry.RegistryFactory;
 import com.anyan.rpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +44,15 @@ public class RpcApplication {
     public static void init() {
         RpcConfig newConfig;
         try {
+            log.info("加载配置文件信息");
             newConfig = ConfigUtils.loadConfig(RpcConfig.class, RpcConstant.DEFAULT_RPC_PREFIX);
+
+            //注册中心初始化
+            log.info("注册中心初始化start");
+            RegistryConfig registryConfig = newConfig.getRegistryConfig();
+            Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+            registry.init(registryConfig);
+            log.info("注册中心初始化end registry:{}", registryConfig);
         } catch (Exception e) {
             newConfig = new RpcConfig();
         }
