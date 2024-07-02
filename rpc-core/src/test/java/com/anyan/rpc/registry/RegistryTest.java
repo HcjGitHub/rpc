@@ -25,7 +25,7 @@ public class RegistryTest {
         registry.init(registryConfig);
     }
 
-    @Test
+//    @Test
     public void register() throws Exception {
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName("myService");
@@ -56,6 +56,13 @@ public class RegistryTest {
         String serviceKey = serviceMetaInfo.getServiceKey();
         List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceKey);
         Assert.assertNotNull(serviceMetaInfoList);
+    }
+
+    @Test
+    public void hearBeat() throws Exception {
+        register();
+
+        Thread.sleep(60000);
     }
 
 }
